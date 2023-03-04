@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "match-three", "match-three\match-three.csproj", "{D61606DF-F57F-45B2-A238-757B19D86CDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "match-three-tests", "match-three-tests\match-three-tests.csproj", "{6A1E7FE2-76BB-4F2D-80C4-349560227962}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D61606DF-F57F-45B2-A238-757B19D86CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D61606DF-F57F-45B2-A238-757B19D86CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D61606DF-F57F-45B2-A238-757B19D86CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D61606DF-F57F-45B2-A238-757B19D86CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A1E7FE2-76BB-4F2D-80C4-349560227962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A1E7FE2-76BB-4F2D-80C4-349560227962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A1E7FE2-76BB-4F2D-80C4-349560227962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A1E7FE2-76BB-4F2D-80C4-349560227962}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
