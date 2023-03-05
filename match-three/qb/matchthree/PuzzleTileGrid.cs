@@ -16,6 +16,25 @@
             FillGridWithEmptyTiles();
         }
 
+        public PuzzleBoardTile GetTileWithIndex(Index2D index)
+        {
+            if(!IsValidBoardIndex(index))
+                return null;
+
+            return this[index.y, index.x];
+        }
+
+        public bool IsValidBoardIndex(Index2D index)
+        {
+            if (index.x < 0 || index.x >= Columns)
+                return false;
+
+            if (index.y < 0 || index.y >= Rows)
+                return false;
+
+            return true;
+        }
+
         public PuzzleTileGrid CreateCopy()
         {
             PuzzleTileGrid newBoard = new PuzzleTileGrid(Columns, Rows);
@@ -35,7 +54,7 @@
             {
                 for (int x = 0; x < Columns; x++)
                 {
-                    PuzzleBoardTile newTile = new PuzzleBoardTile(x, y, PuzzleTileColorHelper.GetRandomTileColor());
+                    PuzzleBoardTile newTile = new PuzzleBoardTile(x, y, PuzzleBoardTile.RandomTileColor());
                     this[y, x] = newTile;
                 }
             }
@@ -72,5 +91,36 @@
             }
         }
 
+        public static PuzzleTileGrid BuildFrom2DIntegerArray(int[,] grid) {
+
+            int Columns = grid.GetLength(1);
+            int Rows = grid.GetLength(0);
+
+            PuzzleTileGrid newBoard = new PuzzleTileGrid(Columns, Rows);
+            for (int y = 0; y < Rows; y++)
+            {
+                for (int x = 0; x < Columns; x++)
+                {
+                    newBoard[y, x] = new PuzzleBoardTile(x, y, (PuzzleTileColors)grid[y, x] );
+                }
+            }
+            return newBoard;
+        }
+
+        public override string ToString()
+        {
+            string output = "Grid: \n";
+            for (int y = 0; y < Rows; y++)
+            {
+                for (int x = 0; x < Columns; x++)
+                {
+                    output += "[" +  this[y, x].TileColor.ToString().Substring(0,1) + "]";
+                    PuzzleBoardTile newTile = new PuzzleBoardTile(x, y, PuzzleTileColors.None);
+                    this[y, x] = newTile;
+                }
+                output += "\n";
+            }
+            return output;
+        }
     }
 }

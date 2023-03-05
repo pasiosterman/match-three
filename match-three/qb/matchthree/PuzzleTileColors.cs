@@ -8,7 +8,7 @@ namespace QB.MatchThree
         Red = 1,
         Blue = 2,
         Green = 3,
-        Purple = 4,
+        Violet = 4,
         Yellow = 5,
         Pink = 6,
     }

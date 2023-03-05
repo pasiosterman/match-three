@@ -12,5 +12,11 @@ namespace QB.MatchThree
             TileColor = tileColor;
             MatchType = matchType;
         }
+
+        public override string ToString()
+        {
+            string matchTypeName = MatchType != null ? MatchType.GetType().Name : "Undefined";
+            return matchTypeName + " of " + TileCount + " with color " + PuzzleBoardTile.NameOfTileColor(TileColor);
+        }
     }
 }
