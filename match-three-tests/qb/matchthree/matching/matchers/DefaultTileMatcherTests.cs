@@ -10,7 +10,32 @@ namespace QB.MatchThree.Matching.Matchers
     {
 
         [Test]
-        public void TileGridWithFiveRowMatchesReturnsCorrectResult()
+        public void CheckBoardForMatchesReturnsCorrectResultWithTwoTouchingMatchThrees()
+        {
+            int[,] testBoard = new int[,]{
+                { 3, 2, 1, 2, 3, 1 },
+                { 2, 3, 3, 1, 2, 3 },
+                { 1, 2, 3, 1, 2, 3 },
+                { 1, 2, 5, 5, 5, 1 },
+                { 5, 5, 5, 1, 2, 2 }
+            };
+
+            PuzzleTileGrid puzzleTileGrid = PuzzleTileGrid.BuildFrom2DIntegerArray(testBoard);
+            DefaultTileMatcher defaultTileMatcher = new DefaultTileMatcher(puzzleTileGrid);
+            List<PuzzleTileMatch> matches = defaultTileMatcher.CheckBoardForMatches();
+
+            Assert.That(matches, Is.Not.Empty);
+            Assert.That(matches, Has.Exactly(2).Items);
+            
+            for (int i = 0; i < matches.Count; i++)
+            {
+                Assert.That(matches[i].MatchType, Is.TypeOf<ThreeMatch>());
+                Assert.That(matches[i].TileCount, Is.EqualTo(3));
+            }
+        }
+
+        [Test]
+        public void CheckBoardForMatchesReturnsCorrectResultWithFiveRowMatches()
         {
             int[,] testBoard = new int[,]{
                 { 1, 1, 1, 1, 1, 1 },
@@ -35,7 +60,52 @@ namespace QB.MatchThree.Matching.Matchers
         }
 
         [Test]
-        public void TileGridWithTenThreeMatchesReturnsCorrectResult()
+        public void CheckBoardForMatchesReturnsCorrectResultWithLongLinkedMatch(){
+
+            int[,] testBoard = new int[,]{
+                { 1, 1, 1, 2, 2, 1 },
+                { 2, 2, 1, 3, 3, 1 },
+                { 1, 1, 1, 2, 2, 1 },
+                { 1, 2, 2, 4, 4, 1 },
+                { 1, 1, 1, 1, 1, 1 }
+            };
+
+            PuzzleTileGrid puzzleTileGrid = PuzzleTileGrid.BuildFrom2DIntegerArray(testBoard);
+            DefaultTileMatcher defaultTileMatcher = new DefaultTileMatcher(puzzleTileGrid);
+            List<PuzzleTileMatch> matches = defaultTileMatcher.CheckBoardForMatches();
+
+            Assert.That(matches, Is.Not.Empty);
+            Assert.That(matches, Has.Exactly(1).Items);
+            
+            for (int i = 0; i < matches.Count; i++)
+            {
+                Assert.That(matches[i].MatchType, Is.TypeOf<LinkedMatch>());
+                Assert.That(matches[i].TileCount, Is.EqualTo(18));
+            }
+        }
+
+        [Test]
+        public void CheckBoardForMatchesReturnsCorrectResultWithNoMatches(){
+
+            int[,] testBoard = new int[,]{
+                { 1, 1, 2, 1, 4, 4 },
+                { 2, 2, 3, 2, 1, 1 },
+                { 3, 3, 4, 3, 2, 2 },
+                { 4, 4, 5, 2, 3, 3 },
+                { 5, 5, 1, 4, 2, 2 }
+            };
+
+            PuzzleTileGrid puzzleTileGrid = PuzzleTileGrid.BuildFrom2DIntegerArray(testBoard);
+            DefaultTileMatcher defaultTileMatcher = new DefaultTileMatcher(puzzleTileGrid);
+            List<PuzzleTileMatch> matches = defaultTileMatcher.CheckBoardForMatches();
+
+            Assert.That(matches, Is.Empty);
+            Assert.That(matches, Has.Exactly(0).Items);
+            Assert.That(matches.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void CheckBoardForMatchesReturnsCorrectResultWithTenThreeMatches()
         {
             int[,] testBoard = new int[,]{
                 { 1, 1, 1, 2, 2, 2 },
@@ -60,7 +130,7 @@ namespace QB.MatchThree.Matching.Matchers
         }
 
         [Test]
-        public void TileGridWithTwoCrossMatchesReturnsCorrectResult()
+        public void CheckBoardForMatchesReturnsCorrectResultWithTwoCrossMatches()
         {
             int[,] testBoard = new int[,]{
                 { 1, 2, 1, 2, 4, 2 },
@@ -85,7 +155,7 @@ namespace QB.MatchThree.Matching.Matchers
         }
 
         [Test]
-        public void TraverseTileMatchOfThreeCorrectly()
+        public void CheckBoardForMatchesReturnsCorrectResultWithMatchOfThree()
         {
             int[,] testBoard = new int[,]{
                 { 2, 2, 2, 2, 2, 2 },
@@ -137,10 +207,10 @@ namespace QB.MatchThree.Matching.Matchers
         {
             int[,] testBoard = new int[,]{
                 { 1, 1, 1, 1, 1, 1 },
-                { 2, 2, 2, 2, 2, 2 },
+                { 2, 2, 2, 2, 2, 3 },
                 { 3, 3, 3, 3, 3, 2 },
-                { 4, 4, 4, 4, 4, 2 },
-                { 5, 5, 5, 5, 5, 5 }
+                { 4, 4, 4, 4, 4, 5 },
+                { 5, 5, 5, 5, 5, 4 }
             };
 
             PuzzleTileGrid puzzleTileGrid = PuzzleTileGrid.BuildFrom2DIntegerArray(testBoard);
@@ -174,7 +244,8 @@ namespace QB.MatchThree.Matching.Matchers
             Assert.That(matchGroup.Tiles, Has.Exactly(1).Items);
         }
 
-        public void TraverseTileTraversesLShapeCorrectly()
+        [Test]
+        public void TraverseTileCorrectlyTraversesLongPath()
         {
             int[,] testBoard = new int[,]{
                 { 1, 1, 1, 2, 2, 1 },
@@ -185,14 +256,14 @@ namespace QB.MatchThree.Matching.Matchers
             };
 
             PuzzleTileGrid puzzleTileGrid = PuzzleTileGrid.BuildFrom2DIntegerArray(testBoard);
-            PuzzleBoardTile bottomLeftTile = puzzleTileGrid[0, 0];
+            PuzzleBoardTile topRightTile = puzzleTileGrid[0, 0];
             DefaultTileMatcher defaultTileMatcher = new DefaultTileMatcher(puzzleTileGrid);
 
             MatchGroup matchGroup = new MatchGroup(new HashSet<PuzzleBoardTile>());
-            defaultTileMatcher.TraverseTile(bottomLeftTile, matchGroup);
+            defaultTileMatcher.TraverseTile(topRightTile, matchGroup);
 
             Assert.That(matchGroup.Traversed, Has.Exactly(18).Items);
-            Assert.That(matchGroup.Tiles, Has.Exactly(2).Items);
+            Assert.That(matchGroup.Tiles, Has.Exactly(6).Items);
         }
     }
 }
